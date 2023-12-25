@@ -1,0 +1,17 @@
+Fizio-patient
+    Ffizio-patient-impl
+        Fdao
+            Fimpl
+                -implementations
+            -interfaces
+        Fexception
+            -exceptions
+        Fservice
+            Fimpl
+                -implementations
+            -interfaces
+    Ffizio-patient-model
+        Fentities
+            -entitiy-classes
+        Fexception
+            -exceptions
