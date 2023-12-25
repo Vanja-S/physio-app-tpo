@@ -11,8 +11,8 @@ spring:
       name-claim: name
   datasource:
     url: jdbc:mysql://localhost:3306/fizio
-    username: springstudent
-    password: springstudent
+    username: fizioUser
+    password: fizioUser
 
 server:
   port: 8081

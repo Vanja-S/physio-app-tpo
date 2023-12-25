@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+    <Appenders>
+        <RollingRandomAccessFile name="file" fileName="logs/server.log" filePattern="logs/server-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{ISO8601} %p %c{1} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="file"/>
+        </Root>
+    </Loggers>
+</Configuration>
