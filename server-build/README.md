@@ -1,5 +1,6 @@
 # Usage of Fizio App Server
 Server is used to expose endpoints and provide clinical data to authorized request that have a valid jwt token in the appropriate header.
+Due to upload limit pull the project and then put the jar file downloaded from <https://drive.google.com/drive/folders/1nXiu0LbCXcpN_RW75srXRWiGXkb1_Bae?usp=share_link> in this folder.
 # Installation
 
 ## 1. Configuration
