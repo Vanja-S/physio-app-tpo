@@ -56,3 +56,29 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.idea/
+target/
+classes/
+
+git.properties
+src/main/resources/log4j2.xml
+src/main/resources/application-dev.yml
+src/main/resources/application-dev.properties
+
+*.iml
+*.ipr
+dataset_xsd
+preferences.xml
+
+*.log
+*.log.[0-9]
+id_file
+
+.DS_Store
+/.project
+
+plugins/
+*.lck
+
+.java-version
