@@ -37,6 +37,8 @@ In the folder there are three configuration files
 > example: port: 8081
 
 # 2. Requirments
+- Create folder "logs" in this directory
+- Create folder tmp in this directory
 - Navigate to base folder of server where fizio-app.jar is located and set Java version to 17.
 - Keycloak started
 - Database Server running with proper schema
