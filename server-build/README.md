@@ -51,6 +51,7 @@ Start the server
 ```sh
 ./fizio-app.jar start
 ```
+Use <http://{HOST}:{PORT}/swagger-ui/index.html> after starting the server.
 
 Stop the server
 ```sh
