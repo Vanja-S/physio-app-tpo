@@ -31,4 +31,9 @@ public class PacientDaoImpl implements PacientDao {
         }
         return resultList;
     }
+
+    @Override
+    public Pacient getByusername(String username) {
+        return entityManager.find(Pacient.class, username);
+    }
 }

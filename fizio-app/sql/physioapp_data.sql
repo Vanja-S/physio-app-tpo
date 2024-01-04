@@ -56,7 +56,7 @@ INSERT INTO vnos (id_vaje, id_fizioplana, st_setov, st_ponovitev) VALUES (2, 1, 
 INSERT INTO vnos (id_vaje, id_fizioplana, st_setov, st_ponovitev) VALUES (3, 1, 3, 12);
 
 -- obvestilo
-INSERT INTO obvestilo (id_termina, ts, vsebina) VALUES (2, '2023-12-10 15:10:10', 'Naročeni ste na pregled dne 20. 1. 2024 ob 12:00 pri dr. Walter Nolan.');
-INSERT INTO obvestilo (id_termina, ts, vsebina) VALUES (4, '2023-12-7 16:20:10', 'Naročeni ste na pregled dne 30. 1. 2024 ob 9:00 pri dr. Meghan Gamble.');
+INSERT INTO obvestilo (id_termina, naslov_obvestila, ts, vsebina) VALUES (2, 'Naročeni ste na pregled', '2023-12-10 15:10:10', 'Naročeni ste na pregled dne 20. 1. 2024 ob 12:00 pri dr. Walter Nolan.');
+INSERT INTO obvestilo (id_termina, naslov_obvestila, ts, vsebina) VALUES (4, 'Pregled preklican', '2023-12-7 16:20:10', 'Naročeni ste na pregled dne 30. 1. 2024 ob 9:00 pri dr. Meghan Gamble.');
 
 

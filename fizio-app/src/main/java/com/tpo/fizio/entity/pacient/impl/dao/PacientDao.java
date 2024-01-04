@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface PacientDao {
     List<Pacient> getAll();
+
+    Pacient getByusername(String username);
 }
