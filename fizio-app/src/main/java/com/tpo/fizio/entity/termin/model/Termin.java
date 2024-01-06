@@ -7,7 +7,6 @@ import com.tpo.fizio.entity.pacient.model.Pacient;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Tadej Delopst

@@ -1,46 +1,30 @@
 package com.tpo.fizio.entity.fizioplan.model;
 
-import com.tpo.fizio.entity.pacient.model.Pacient;
-import com.tpo.fizio.entity.vnos.model.Vnos;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 /**
  * @author Tadej Delopst
  */
-@Entity
-@Table(name = "FIZIOPLAN")
-public class FizioPlan {
-
-    @Id
-    @Column(name = "ID_FIZIOPLANA", nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FizioplanDto {
     private Integer id;
-
-    @Column(name = "NASLOV_FIZIOPLANA", length = 150)
     private String naslov;
-
-    @Column(name = "POSKODBA", length = 100)
     private String poskodba;
-
-    @Column(name = "TRAJANJE_OD")
     private OffsetDateTime trajanjeOd;
-
-    @Column(name = "TRAJANJE_DO")
     private OffsetDateTime trajanjeDo;
-
-    @Column(name = "OPIS_FIZIOPLANA", length = 5000)
     private String opis;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USERNAME_PACIENTA", nullable = false)
-    private Pacient pacient;
+    public FizioplanDto() {
+    }
 
-    @OneToMany(mappedBy = "fizioPlan", cascade = CascadeType.ALL)
-    private List<Vnos> vnosi;
+    public FizioplanDto(Integer id, String naslov, String poskodba, OffsetDateTime trajanjeOd, OffsetDateTime trajanjeDo, String opis) {
+        this.id = id;
+        this.naslov = naslov;
+        this.poskodba = poskodba;
+        this.trajanjeOd = trajanjeOd;
+        this.trajanjeDo = trajanjeDo;
+        this.opis = opis;
+    }
 
     public Integer getId() {
         return id;
@@ -88,21 +72,5 @@ public class FizioPlan {
 
     public void setOpis(String opis) {
         this.opis = opis;
-    }
-
-    public Pacient getPacient() {
-        return pacient;
-    }
-
-    public void setPacient(Pacient pacient) {
-        this.pacient = pacient;
-    }
-
-    public List<Vnos> getVnosi() {
-        return vnosi;
-    }
-
-    public void setVnosi(List<Vnos> vnosi) {
-        this.vnosi = vnosi;
     }
 }

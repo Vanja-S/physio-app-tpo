@@ -17,6 +17,9 @@ public class Obvestilo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "NASLOV_OBVESTILA", length = 150)
+    private String naslov;
+
     @Column(name = "TS")
     private OffsetDateTime ts;
 
@@ -57,5 +60,13 @@ public class Obvestilo {
 
     public void setTermin(Termin termin) {
         this.termin = termin;
+    }
+
+    public String getNaslov() {
+        return naslov;
+    }
+
+    public void setNaslov(String naslov) {
+        this.naslov = naslov;
     }
 }

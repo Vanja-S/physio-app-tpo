@@ -35,34 +35,35 @@ public class ApplicationController {
         this.pacientService = pacientService;
     }
 
-    @Operation(summary = "Says hello to all users.",
-               description = "<p>Says hello to all users. User doesn't have to be authenticated.</p>",
-               tags = DEMO_UNAUTHORIZED)
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success - successfully said hello."),
-            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
-    })
-    @GetMapping("/app")
-    public ResponseEntity<List<PacientDto>> helloUnauthorized() {
-        List<PacientDto> pacienti = pacientService.getAllPacients();
-        return ResponseEntity.ok(pacienti);
-    }
 
-
-
-    @Operation(summary = "Says hello only to authorized users.",
-               description = "<p>Says hello only to authorized users. User has to be authorized and get a valid token from keycloak.</p>",
-               tags = DEMO_AUTHORIZED)
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Success - successfully said hello."),
-            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
-    })
-    @GetMapping("/user")
-    @Secured({"ROLE_ADMIN", "ROLE_READ", "ROLE_WRITE"})
-    public ResponseEntity<DemoDto> helloAuthorized() {
-        DemoDto dto = new DemoDto("Hello Authorized World:)");
-        return ResponseEntity.ok(dto);
-    }
+//    @Operation(summary = "Says hello to all users.",
+//               description = "<p>Says hello to all users. User doesn't have to be authenticated.</p>",
+//               tags = DEMO_UNAUTHORIZED)
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Success - successfully said hello."),
+//            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+//            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+//    })
+//    @GetMapping("/app")
+//    public ResponseEntity<List<PacientDto>> helloUnauthorized() {
+//        List<PacientDto> pacienti = pacientService.getAllPacients();
+//        return ResponseEntity.ok(pacienti);
+//    }
+//
+//
+//
+//    @Operation(summary = "Says hello only to authorized users.",
+//               description = "<p>Says hello only to authorized users. User has to be authorized and get a valid token from keycloak.</p>",
+//               tags = DEMO_AUTHORIZED)
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "Success - successfully said hello."),
+//            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+//            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+//    })
+//    @GetMapping("/user")
+//    @Secured({"ROLE_ADMIN", "ROLE_READ", "ROLE_WRITE"})
+//    public ResponseEntity<DemoDto> helloAuthorized() {
+//        DemoDto dto = new DemoDto("Hello Authorized World:)");
+//        return ResponseEntity.ok(dto);
+//    }
 }
