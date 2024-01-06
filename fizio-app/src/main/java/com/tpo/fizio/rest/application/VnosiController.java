@@ -1,7 +1,5 @@
 package com.tpo.fizio.rest.application;
 
-import com.tpo.fizio.entity.dto.VnosMetaDto;
-import com.tpo.fizio.entity.vnos.impl.dao.VnosDao;
 import com.tpo.fizio.entity.vnos.impl.service.VnosService;
 import com.tpo.fizio.entity.vnos.model.VnosActionInformation;
 import com.tpo.fizio.entity.vnos.model.VnosDto;
@@ -9,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -68,5 +65,23 @@ public class VnosiController {
     ) {
         VnosActionInformation information = vnosService.updateKomentarVnosa(vnosId, dto.getKomentar());
         return ResponseEntity.ok(information);
+    }
+
+    @Operation(summary = "GET Vnosi",
+            description = "<p>Vrne vnosi, ki obstajajo. V primeru, da vnosov ni, je rezultat prazen.</p>",
+            tags = VNOS)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @GetMapping("/")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<List<VnosDto>> getVnosi(
+    ) {
+        List<VnosDto> vnosi = vnosService.getVnosi();
+        if (vnosi == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(vnosi);
     }
 }

@@ -2,13 +2,13 @@ package com.tpo.fizio.rest.application;
 
 import com.tpo.fizio.entity.fizioplan.impl.service.FizioplanService;
 import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.obvestilo.impl.service.ObvestiloService;
-import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.pacient.impl.service.PacientService;
+import com.tpo.fizio.entity.pacient.model.PacientDto;
 import com.tpo.fizio.entity.termin.impl.service.TerminService;
 import com.tpo.fizio.entity.termin.model.TerminDto;
-import com.tpo.fizio.entity.vnos.model.VnosDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,12 +34,74 @@ public class PacientiController {
     private FizioplanService fizioplanService;
     private TerminService terminService;
     private ObvestiloService obvestiloService;
+    private PacientService pacientService;
 
     @Autowired
-    public PacientiController(FizioplanService fizioplanService, TerminService terminService, ObvestiloService obvestiloService) {
+    public PacientiController(
+            FizioplanService fizioplanService,
+            TerminService terminService,
+            ObvestiloService obvestiloService,
+            PacientService pacientService) {
         this.fizioplanService = fizioplanService;
         this.terminService = terminService;
         this.obvestiloService = obvestiloService;
+        this.pacientService = pacientService;
+    }
+
+    @Operation(summary = "GET Fizioterapevt Pacienta",
+            description = "<p>Vrne fizioterapveta pacienta</p>",
+            tags = PACIENT)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+
+    @GetMapping("/{username}/fizioterapevt")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<FizioterapevtDto> getPacientsFizioterapevt(
+            @PathVariable("username") String pacientUsername
+    ) {
+        FizioterapevtDto pacientsFizio = pacientService.getPacientsFizioterapevt(pacientUsername);
+        if (pacientsFizio == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(pacientsFizio);
+    }
+
+    @Operation(summary = "GET Pacient",
+            description = "<p>Vrne pacienta, ki ima kartoteko. V primeru, da pacienta ni je rezultat prazen</p>",
+            tags = PACIENT)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @GetMapping("/{username}")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<PacientDto> getPacient(
+            @PathVariable("username") String pacientUsername
+    ) {
+        PacientDto pacient = pacientService.getPacient(pacientUsername);
+        if (pacient == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(pacient);
+    }
+
+    @Operation(summary = "GET Pacienti",
+            description = "<p>Vrne paciente, ki imajo kartoteko. V primeru, da pacientov ni je rezultat prazen</p>",
+            tags = PACIENT)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @GetMapping("/")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<List<PacientDto>> getPacients() {
+        List<PacientDto> pacients = pacientService.getPacients();
+        if (pacients == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(pacients);
     }
 
     @Operation(summary = "GET Fizioplan meta data za Pacienta",

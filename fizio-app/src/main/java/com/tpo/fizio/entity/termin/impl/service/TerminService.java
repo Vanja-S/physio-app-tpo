@@ -19,4 +19,8 @@ public interface TerminService {
     TerminActionInformation cancelTermin(Integer terminId);
 
     List<TerminDto> getAllPacientTermini(String username);
+
+    List<TerminDto> getTermini();
+
+    TerminDto getTermin(Integer terminId);
 }

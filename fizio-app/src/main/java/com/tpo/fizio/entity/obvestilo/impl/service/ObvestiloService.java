@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface ObvestiloService {
     List<ObvestiloDto> getAllPacientObvestila(String username);
+
+    List<ObvestiloDto> getObvestila();
+
+    ObvestiloDto getObvestilo(Integer obvestiloId);
 }

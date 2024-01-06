@@ -14,4 +14,7 @@ public interface VnosDao {
     Vnos findById(Integer vnosId);
 
     VnosActionInformation updateKomentarVnosa(Integer vnosId, String komentar);
+
+    List<Vnos> getVnosi();
+
 }

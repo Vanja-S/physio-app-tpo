@@ -2,13 +2,8 @@ package com.tpo.fizio.entity.obvestilo.impl.dao.impl;
 
 import com.tpo.fizio.entity.obvestilo.impl.dao.ObvestiloDao;
 import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
-import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
-import com.tpo.fizio.entity.pacient.model.Pacient;
-import com.tpo.fizio.entity.termin.model.Termin;
-import com.tpo.fizio.entity.vnos.impl.dao.VnosDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -46,5 +41,24 @@ public class ObvestiloDaoImpl implements ObvestiloDao {
             resultList = null;
         }
         return resultList;
+    }
+
+    @Override
+    public List<Obvestilo> getObvestila() {
+        TypedQuery<Obvestilo> theQuery = entityManager.createQuery("from Obvestilo", Obvestilo.class);
+
+        List<Obvestilo> resultList;
+
+        try {
+            resultList = theQuery.getResultList();
+        } catch (Exception e) {
+            resultList = null;
+        }
+        return resultList;
+    }
+
+    @Override
+    public Obvestilo getObvestilo(Integer obvestiloId) {
+        return entityManager.find(Obvestilo.class, obvestiloId);
     }
 }

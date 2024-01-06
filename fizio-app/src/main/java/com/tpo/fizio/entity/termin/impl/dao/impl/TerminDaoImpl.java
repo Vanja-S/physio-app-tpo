@@ -12,10 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Tadej Delopst
@@ -40,7 +37,7 @@ public class TerminDaoImpl implements TerminDao {
 
         theQuery.setParameter("username", pacientUsername);
 
-        List<Termin> resultList = null;
+        List<Termin> resultList;
 
         try {
             resultList = theQuery.getResultList();
@@ -63,7 +60,7 @@ public class TerminDaoImpl implements TerminDao {
 
         theQuery.setParameter("username", pacient.getFizioterapevt().getUsername());
 
-        List<Termin> resultList = null;
+        List<Termin> resultList;
 
         try {
             resultList = theQuery.getResultList();
@@ -114,7 +111,7 @@ public class TerminDaoImpl implements TerminDao {
 
         theQuery.setParameter("username", username);
 
-        List<Termin> resultList = null;
+        List<Termin> resultList;
 
         try {
             resultList = theQuery.getResultList();
@@ -122,5 +119,26 @@ public class TerminDaoImpl implements TerminDao {
             resultList = null;
         }
         return resultList;
+    }
+
+    @Override
+    public List<Termin> getTermini() {
+        TypedQuery<Termin> theQuery = entityManager.createQuery(
+                "SELECT t FROM Termin t",
+                Termin.class);
+
+        List<Termin> resultList;
+
+        try {
+            resultList = theQuery.getResultList();
+        } catch (Exception e) {
+            resultList = null;
+        }
+        return resultList;
+    }
+
+    @Override
+    public Termin getTermin(Integer terminId) {
+        return entityManager.find(Termin.class, terminId);
     }
 }

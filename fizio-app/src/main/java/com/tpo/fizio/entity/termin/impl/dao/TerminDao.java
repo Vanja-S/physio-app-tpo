@@ -19,4 +19,8 @@ public interface TerminDao {
     TerminActionInformation cancelTermin(Integer terminId);
 
     List<Termin> getAllPacientTermini(String username);
+
+    List<Termin> getTermini();
+
+    Termin getTermin(Integer terminId);
 }

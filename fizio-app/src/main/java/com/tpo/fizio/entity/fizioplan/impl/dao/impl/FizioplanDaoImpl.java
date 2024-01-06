@@ -2,14 +2,13 @@ package com.tpo.fizio.entity.fizioplan.impl.dao.impl;
 
 import com.tpo.fizio.entity.fizioplan.impl.dao.FizioplanDao;
 import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
-import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
-import com.tpo.fizio.entity.pacient.impl.exception.PacientNotFoundException;
 import com.tpo.fizio.entity.pacient.model.Pacient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -58,6 +57,25 @@ public class FizioplanDaoImpl implements FizioplanDao {
             return null;
         }
         return pacient.getFizioplani();
+    }
+
+    @Override
+    public List<FizioPlan> getFizioplans() {
+        TypedQuery<FizioPlan> theQuery = entityManager.createQuery("from FizioPlan ", FizioPlan.class);
+
+        List<FizioPlan> resultList;
+
+        try {
+            resultList = theQuery.getResultList();
+        } catch (Exception e) {
+            resultList = null;
+        }
+        return resultList;
+    }
+
+    @Override
+    public FizioPlan getFizioplan(Integer fizioplanID) {
+        return entityManager.find(FizioPlan.class, fizioplanID);
     }
 }
 

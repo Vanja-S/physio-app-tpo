@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Transient;
-import javax.transaction.Transactional;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -51,5 +50,19 @@ public class VnosDaoImpl implements VnosDao {
         }
         vnos.setKomentar(komentar);
         return new VnosActionInformation(1, true, false);
+    }
+
+    @Override
+    public List<Vnos> getVnosi() {
+        TypedQuery<Vnos> theQuery = entityManager.createQuery(
+                "select v FROM Vnos v", Vnos.class);
+        List<Vnos> resultList;
+
+        try {
+            resultList = theQuery.getResultList();
+        } catch (Exception e) {
+            resultList = null;
+        }
+        return resultList;
     }
 }

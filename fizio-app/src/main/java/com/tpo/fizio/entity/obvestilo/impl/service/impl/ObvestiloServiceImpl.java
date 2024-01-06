@@ -4,7 +4,6 @@ import com.tpo.fizio.entity.obvestilo.impl.dao.ObvestiloDao;
 import com.tpo.fizio.entity.obvestilo.impl.service.ObvestiloService;
 import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
-import com.tpo.fizio.entity.vnos.impl.service.VnosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +32,33 @@ public class ObvestiloServiceImpl implements ObvestiloService {
                         obv.getTs(),
                         obv.getVsebina())
         ).toList();
+    }
+
+    @Override
+    public List<ObvestiloDto> getObvestila() {
+        List<Obvestilo> obvestila = obvestiloDao.getObvestila();
+        if (obvestila != null) {
+            return obvestila.stream().map(obv -> new ObvestiloDto(
+                    obv.getId(),
+                    obv.getNaslov(),
+                    obv.getTs(),
+                    obv.getVsebina()
+            )).toList();
+        }
+        return null;
+    }
+
+    @Override
+    public ObvestiloDto getObvestilo(Integer obvestiloId) {
+        Obvestilo obvestilo = obvestiloDao.getObvestilo(obvestiloId);
+        if (obvestiloId != null) {
+            return new ObvestiloDto(
+                    obvestilo.getId(),
+                    obvestilo.getNaslov(),
+                    obvestilo.getTs(),
+                    obvestilo.getVsebina()
+            );
+        }
+        return null;
     }
 }

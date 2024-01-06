@@ -84,4 +84,36 @@ public class TerminServiceImpl implements TerminService {
                 t.getFizioterapevt().getIme() + " " + t.getFizioterapevt().getPriimek()
         )).toList();
     }
+
+    @Override
+    public List<TerminDto> getTermini() {
+        List<Termin> termini = terminDao.getTermini();
+        if (termini != null) {
+            return termini.stream().map(t -> new TerminDto(
+                    t.getId(),
+                    t.getZacetek(),
+                    t.getKonec(),
+                    t.getJeZaseden(),
+                    t.getFizioterapevt().getUsername(),
+                    t.getFizioterapevt().getIme() + " " + t.getFizioterapevt().getPriimek()
+            )).toList();
+        }
+        return null;
+    }
+
+    @Override
+    public TerminDto getTermin(Integer terminId) {
+        Termin termin = terminDao.getTermin(terminId);
+        if (termin != null) {
+            return new TerminDto(
+                    termin.getId(),
+                    termin.getZacetek(),
+                    termin.getKonec(),
+                    termin.getJeZaseden(),
+                    termin.getFizioterapevt().getUsername(),
+                    termin.getFizioterapevt().getIme() + " " + termin.getFizioterapevt().getPriimek()
+            );
+        }
+        return null;
+    }
 }

@@ -1,8 +1,6 @@
 package com.tpo.fizio.entity.pacient.model;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 public class PacientDto {
     private String username;
@@ -10,20 +8,16 @@ public class PacientDto {
     private String priimek;
     private OffsetDateTime datumRojstva;
     private String fizioterapevtUsername;
-    private List<Integer> fizioPlaniIds;
-    private List<Integer> terminiIds;
 
     public PacientDto() {
     }
 
-    public PacientDto(String username, String ime, String priimek, OffsetDateTime datumRojstva, String fizioterapevtUsername, List<Integer> fizioPlaniIds, List<Integer> terminiIds) {
+    public PacientDto(String username, String ime, String priimek, OffsetDateTime datumRojstva, String fizioterapevtUsername) {
         this.username = username;
         this.ime = ime;
         this.priimek = priimek;
         this.datumRojstva = datumRojstva;
         this.fizioterapevtUsername = fizioterapevtUsername;
-        this.fizioPlaniIds = fizioPlaniIds;
-        this.terminiIds = terminiIds;
     }
 
     public String getUsername() {
@@ -64,21 +58,5 @@ public class PacientDto {
 
     public void setFizioterapevtUsername(String fizioterapevtUsername) {
         this.fizioterapevtUsername = fizioterapevtUsername;
-    }
-
-    public List<Integer> getFizioPlaniIds() {
-        return fizioPlaniIds;
-    }
-
-    public void setFizioPlaniIds(List<Integer> fizioPlaniIds) {
-        this.fizioPlaniIds = fizioPlaniIds;
-    }
-
-    public List<Integer> getTerminiIds() {
-        return terminiIds;
-    }
-
-    public void setTerminiIds(List<Integer> terminiIds) {
-        this.terminiIds = terminiIds;
     }
 }

@@ -1,11 +1,8 @@
 package com.tpo.fizio.rest.application;
 
 import com.tpo.fizio.entity.termin.impl.service.TerminService;
-import com.tpo.fizio.entity.termin.model.Termin;
 import com.tpo.fizio.entity.termin.model.TerminActionInformation;
 import com.tpo.fizio.entity.termin.model.TerminDto;
-import com.tpo.fizio.entity.vnos.model.VnosActionInformation;
-import com.tpo.fizio.entity.vnos.model.VnosDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,15 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static com.tpo.fizio.rest.util.RestConstants.TERMIN;
-import static com.tpo.fizio.rest.util.RestConstants.VNOS;
 
 /**
  * @author Tadej Delopst
@@ -103,6 +95,43 @@ public class TerminiController {
     ) {
         TerminActionInformation information = terminService.cancelTermin(terminId);
         return ResponseEntity.ok(information);
+    }
+
+    @Operation(summary = "GET Termini",
+            description = "<p>Vrne vse termine, ki obstajajo. V primeru da terminov ni, je rezultat prazen</p>",
+            tags = TERMIN)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @GetMapping("/")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<List<TerminDto>> getTermini(
+    ) {
+        List<TerminDto> termini = terminService.getTermini();
+        if (termini == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(termini);
+    }
+
+    @Operation(summary = "GET Termin",
+            description = "<p>Vrne termin. V primeru da termina ni, je rezultat prazen</p>",
+            tags = TERMIN)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @GetMapping("/{terminID}")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<TerminDto> getTermin(
+            @PathVariable("terminID") Integer terminId
+    ) {
+        TerminDto termin = terminService.getTermin(terminId);
+        if (termin == null)
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(termin);
     }
 
 
