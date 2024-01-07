@@ -116,4 +116,15 @@ public class VnosServiceImpl implements VnosService {
         }
         return null;
     }
+
+    //TAB: Code -> imeplement method
+    //Ker delaš update, ki spreminja bazo pod @Override dodaš @Transactional
+    @Override
+    @Transactional
+    public VnosActionInformation updateVnos(VnosDto dto) {
+        //uzames return type te metode -> XActionInformation
+        //isto ko prej -> z misko gor in create method
+        VnosActionInformation information = vnosDao.updateVnos(dto);
+        return information;
+    }
 }

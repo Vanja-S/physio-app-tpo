@@ -23,4 +23,7 @@ public interface VnosService {
     List<FizioplanDto> getFizioplans();
 
     FizioplanDto getFizioplan(Integer fizioplanID);
+
+    //Ena metoda višje ma z malo napisan 1 implementation -> klikneš taj gor
+    VnosActionInformation updateVnos(VnosDto dto);
 }
