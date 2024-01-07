@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    button {
+      display: inline-block;
+      /* Add this line */
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Styles for UP text */
+    button[data-text="UP"] {
+      background-color: green;
+    }
+
+    /* Styles for DOWN text */
+    button[data-text="DOWN"] {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="articles">
+    <article>
+      <div class="article-wrapper">
+        <figure>
+          <img src="{{url_for('static', filename='media/database.png')}}" alt="" />
+        </figure>
+        <div class="article-body">
+          <h2>Database</h2>
+          <button data-text="{{database_up}}">{{database_up}}</button>
+        </div>
+      </div>
+    </article>
+    <article>
+
+      <div class="article-wrapper">
+        <figure>
+          <img src="{{url_for('static', filename='media/keycloak.png')}}" alt="" />
+        </figure>
+        <div class="article-body">
+          <h2>Keycloak</h2>
+          <button data-text="{{keycloak_up}}">{{keycloak_up}}</button>
+        </div>
+      </div>
+    </article>
+    <article>
+
+      <div class="article-wrapper">
+        <figure>
+          <img src="{{url_for('static', filename='media/server.png')}}" alt="" />
+        </figure>
+        <div class="article-body">
+          <h2>Server</h2>
+          <button data-text="{{server_up}}">{{server_up}}</button>
+        </div>
+      </div>
+    </article>
+  </section>
+</body>
+
+</html>

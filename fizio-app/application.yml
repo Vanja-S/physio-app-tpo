@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: FizioApp
+  security:
+    oauth2:
+      issuer-uri: http://localhost:8080/realms/fizio
+      access-token-url: http://localhost:8080/realms/fizio/protocol/openid-connect/token
+      authorization-url: http://localhost:8080/realms/fizio/protocol/openid-connect/auth
+      roles-path: resource_access/fizio/roles
+      username-claim: preferred_username
+      name-claim: name
+  datasource:
+    url: jdbc:mysql://localhost:3306/fizio
+    username: springstudent
+    password: springstudent
+
+server:
+  port: 8081
+  max-http-header-size: 65536
+  servlet:
+    context-path: /
+  tomcat:
+    accept-count: 32
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true

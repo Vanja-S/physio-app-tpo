@@ -1,0 +1,5 @@
+sys
+Flask
+requests
+mysql.connector
+logging
