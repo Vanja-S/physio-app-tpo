@@ -3,9 +3,6 @@ package com.tpo.fizio.rest.application;
 import com.tpo.fizio.entity.obvestilo.impl.service.ObvestiloService;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
-import com.tpo.fizio.entity.termin.model.TerminActionInformation;
-import com.tpo.fizio.entity.vnos.model.VnosActionInformation;
-import com.tpo.fizio.entity.vnos.model.VnosDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.tpo.fizio.rest.util.RestConstants.OBVESTILO;
-import static com.tpo.fizio.rest.util.RestConstants.TERMIN;
 
 /**
  * @author Tadej Delopst
@@ -70,22 +66,20 @@ public class ObvestilaController {
         return ResponseEntity.ok(obvestilo);
     }
 
-    @Operation(summary = "UPDATE NOV NASLOV",
-            description = "<p>NOV OPIS</p>",
+    @Operation(summary = "UPDATE Obvestilo",
+            description = "<p>Posodobi Obvestilo, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Obvestilo ne obstaja je rezultat prazen.</p>",
             tags = OBVESTILO)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    //dolocis novo pot v value = {NOVA POT}, consumes, produces ostane isto, načeloma za vse samo "/"
-    @PutMapping( value = "/", consumes = "application/json", produces = "application/json" )
-    @Secured({"ROLE_PACIENT"}) //ostane nespremenjeno
-    public ResponseEntity<ObvestiloActionInformation> updateObvestilo( //novo ime metode
-                                                                       @RequestBody ObvestiloDto dto //V tistmu kontrolerju ko si tist objekt VnosiController -> VnosDto
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<ObvestiloActionInformation> updateObvestilo(
+            @RequestBody ObvestiloDto dto
     ) {
-        //1. če še ne obstaja ActionInformation za objekt ustvariš class na poti entity/{objekt}/model
-        //2. Za service kreiraš novo metodo update{Objekt}(dto)
         ObvestiloActionInformation information = obvestiloService.updateObvestilo(dto);
         return ResponseEntity.ok(information);
     }

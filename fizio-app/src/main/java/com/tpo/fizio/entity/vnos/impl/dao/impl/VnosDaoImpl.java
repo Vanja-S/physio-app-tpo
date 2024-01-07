@@ -67,23 +67,16 @@ public class VnosDaoImpl implements VnosDao {
         return resultList;
     }
 
-    //isto ko prej code -> imeplement method
-
     @Override
     public VnosActionInformation updateVnos(VnosDto dto) {
-        //iz dtoja vzames ID
         Integer id = dto.getId();
-        //poisces objekt
         Vnos vnos = entityManager.find(Vnos.class, id);
-        //ce obstaja posodobis
         if (vnos != null) {
             vnos.setKomentar(dto.getKomentar());
-            // 12 x 3
             vnos.setStPonovitev(Integer.valueOf(dto.getPonovitve().split("x")[0].strip()));
             vnos.setStSetov(Integer.valueOf(dto.getPonovitve().split("x")[1].strip()));
             return new VnosActionInformation(1, true, false);
         }
-        //v primeru da ne obstaja vrnes isto sam da neuspesno
         return new VnosActionInformation(0, false, false);
     }
 }

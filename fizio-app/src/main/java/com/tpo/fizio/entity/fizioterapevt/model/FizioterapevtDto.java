@@ -9,18 +9,20 @@ public class FizioterapevtDto {
     private String priimek;
     private String ulica;
     private String hisnaStevilka;
+    private Integer postnaStevilka;
     private String kraj;
 
     public FizioterapevtDto() {
     }
 
-    public FizioterapevtDto(String username, String ime, String priimek, String ulica, String hisnaStevilka, String kraj) {
+    public FizioterapevtDto(String username, String ime, String priimek, String ulica, String hisnaStevilka, Integer postnaStevilka, String kraj) {
         this.username = username;
         this.ime = ime;
         this.priimek = priimek;
         this.ulica = ulica;
         this.hisnaStevilka = hisnaStevilka;
         this.kraj = kraj;
+        this.postnaStevilka = postnaStevilka;
     }
 
     public String getUsername() {
@@ -61,6 +63,14 @@ public class FizioterapevtDto {
 
     public void setHisnaStevilka(String hisnaStevilka) {
         this.hisnaStevilka = hisnaStevilka;
+    }
+
+    public Integer getPostnaStevilka() {
+        return postnaStevilka;
+    }
+
+    public void setPostnaStevilka(Integer postnaStevilka) {
+        this.postnaStevilka = postnaStevilka;
     }
 
     public String getKraj() {

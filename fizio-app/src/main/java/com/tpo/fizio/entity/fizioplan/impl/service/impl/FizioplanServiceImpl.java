@@ -59,10 +59,41 @@ public class FizioplanServiceImpl implements FizioplanService {
     }
 
     @Override
+    public List<FizioplanDto> getFizioplans() {
+        List<FizioPlan> fizioplani = fizioplanDao.getFizioplans();
+        if (fizioplani != null) {
+            return fizioplani.stream().map(plan -> new FizioplanDto(
+                    plan.getId(),
+                    plan.getNaslov(),
+                    plan.getPoskodba(),
+                    plan.getTrajanjeOd(),
+                    plan.getTrajanjeDo(),
+                    plan.getOpis()
+            )).toList();
+        }
+        return null;
+    }
+
+    @Override
+    public FizioplanDto getFizioplan(Integer fizioplanID) {
+        FizioPlan fizioPlan = fizioplanDao.getFizioplan(fizioplanID);
+        if (fizioPlan != null) {
+            return new FizioplanDto(
+                    fizioPlan.getId(),
+                    fizioPlan.getNaslov(),
+                    fizioPlan.getPoskodba(),
+                    fizioPlan.getTrajanjeOd(),
+                    fizioPlan.getTrajanjeDo(),
+                    fizioPlan.getOpis()
+            );
+        }
+        return null;
+    }
+
+    @Override
     @Transactional
     public FizioplanActionInformation updateFizioplan(FizioplanDto dto) {
-        FizioplanActionInformation information = fizioplanDao.updateFizioplan(dto);
-        return information;
+        return fizioplanDao.updateFizioplan(dto);
     }
 
 }

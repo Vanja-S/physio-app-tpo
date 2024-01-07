@@ -1,8 +1,5 @@
 package com.tpo.fizio.entity.termin.impl.dao.impl;
 
-import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
-import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
-import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.model.Pacient;
 import com.tpo.fizio.entity.termin.impl.dao.TerminDao;
@@ -148,18 +145,14 @@ public class TerminDaoImpl implements TerminDao {
 
     @Override
     public TerminActionInformation updateTermin(TerminDto dto) {
-        //iz dtoja vzames ID
         Integer id = dto.getTerminId();
-        //poisces objekt
         Termin termin = entityManager.find(Termin.class, id);
-        //ce obstaja posodobis
         if (termin != null) {
             termin.setJeZaseden(dto.getJeZaseden());
             termin.setKonec(dto.getKonec());
             termin.setZacetek(dto.getZacetek());
             return new TerminActionInformation(1, true, false);
         }
-        //v primeru da ne obstaja vrnes isto sam da neuspesno
         return new TerminActionInformation(0, false, false);
     }
 }

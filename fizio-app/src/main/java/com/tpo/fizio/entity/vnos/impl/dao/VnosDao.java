@@ -18,6 +18,5 @@ public interface VnosDao {
 
     List<Vnos> getVnosi();
 
-    //isto ko prej -> ena metode visi 1 implementation -> klikneš taj gor
     VnosActionInformation updateVnos(VnosDto dto);
 }

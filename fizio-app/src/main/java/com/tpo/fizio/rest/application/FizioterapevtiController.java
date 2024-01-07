@@ -1,7 +1,5 @@
 package com.tpo.fizio.rest.application;
 
-import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
-import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.fizioterapevt.impl.service.FizioterapevtService;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.tpo.fizio.rest.util.RestConstants.FIZIOPLAN;
 import static com.tpo.fizio.rest.util.RestConstants.FIZIOTERAPEVT;
 
 /**
@@ -69,22 +66,20 @@ public class FizioterapevtiController {
         return ResponseEntity.ok(fizioterapevt);
     }
 
-    @Operation(summary = "UPDATE NOV NASLOV",
-            description = "<p>NOV OPIS</p>",
+    @Operation(summary = "UPDATE Fizioterapevt",
+            description = "<p>Posodobi Fizioterapevta, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Fizioterapevt ne obstaja je rezultat prazen.</p>",
             tags = FIZIOTERAPEVT)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    //dolocis novo pot v value = {NOVA POT}, consumes, produces ostane isto, načeloma za vse samo "/"
-    @PutMapping( value = "/", consumes = "application/json", produces = "application/json" )
-    @Secured({"ROLE_PACIENT"}) //ostane nespremenjeno
-    public ResponseEntity<FizioterapevtActionInformation> updateFizioterapevt( //novo ime metode
-                                                                       @RequestBody FizioterapevtDto dto //V tistmu kontrolerju ko si tist objekt VnosiController -> VnosDto
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<FizioterapevtActionInformation> updateFizioterapevt(
+            @RequestBody FizioterapevtDto dto
     ) {
-        //1. če še ne obstaja ActionInformation za objekt ustvariš class na poti entity/{objekt}/model
-        //2. Za service kreiraš novo metodo update{Objekt}(dto)
         FizioterapevtActionInformation information = fizioterapevtService.updateFizioterapevt(dto);
         return ResponseEntity.ok(information);
     }

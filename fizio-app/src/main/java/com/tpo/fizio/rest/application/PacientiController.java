@@ -10,8 +10,6 @@ import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
 import com.tpo.fizio.entity.pacient.model.PacientDto;
 import com.tpo.fizio.entity.termin.impl.service.TerminService;
 import com.tpo.fizio.entity.termin.model.TerminDto;
-import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
-import com.tpo.fizio.entity.vaja.model.VajaDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.tpo.fizio.rest.util.RestConstants.PACIENT;
-import static com.tpo.fizio.rest.util.RestConstants.VAJA;
 
 /**
  * @author Tadej Delopst
@@ -205,22 +202,20 @@ public class PacientiController {
         return ResponseEntity.ok(vsaObvestila);
     }
 
-    @Operation(summary = "UPDATE NOV NASLOV",
-            description = "<p>NOV OPIS</p>",
+    @Operation(summary = "UPDATE Pacient",
+            description = "<p>Posodobi Pacienta, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Pacient ne obstaja je rezultat prazen.</p>",
             tags = PACIENT)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    //dolocis novo pot v value = {NOVA POT}, consumes, produces ostane isto, načeloma za vse samo "/"
-    @PutMapping( value = "/", consumes = "application/json", produces = "application/json" )
-    @Secured({"ROLE_PACIENT"}) //ostane nespremenjeno
-    public ResponseEntity<PacientActionInformation> updatePacient( //novo ime metode
-                                                                   @RequestBody PacientDto dto //V tistmu kontrolerju ko si tist objekt VnosiController -> VnosDto
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<PacientActionInformation> updatePacient(
+            @RequestBody PacientDto dto
     ) {
-        //1. če še ne obstaja ActionInformation za objekt ustvariš class na poti entity/{objekt}/model
-        //2. Za service kreiraš novo metodo update{Objekt}(dto)
         PacientActionInformation information = pacientService.updatePacient(dto);
         return ResponseEntity.ok(information);
     }

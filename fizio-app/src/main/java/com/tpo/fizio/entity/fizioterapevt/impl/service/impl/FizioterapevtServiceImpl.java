@@ -1,7 +1,5 @@
 package com.tpo.fizio.entity.fizioterapevt.impl.service.impl;
 
-import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
-import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.fizioterapevt.impl.dao.FizioterapevtDao;
 import com.tpo.fizio.entity.fizioterapevt.impl.service.FizioterapevtService;
 import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
@@ -35,6 +33,7 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
                     fizio.getPriimek(),
                     fizio.getUlica(),
                     fizio.getHisnaStevilka(),
+                    fizio.getPostnaStevilka(),
                     fizio.getKraj()
             )).toList();
         }
@@ -51,6 +50,7 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
                     fizioterapevt.getPriimek(),
                     fizioterapevt.getUlica(),
                     fizioterapevt.getHisnaStevilka(),
+                    fizioterapevt.getPostnaStevilka(),
                     fizioterapevt.getKraj()
             );
         }
@@ -60,7 +60,6 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
     @Override
     @Transactional
     public FizioterapevtActionInformation updateFizioterapevt(FizioterapevtDto dto) {
-        FizioterapevtActionInformation information = fizioterapevtDao.updateFizioterapevt(dto);
-        return information;
+        return fizioterapevtDao.updateFizioterapevt(dto);
     }
 }

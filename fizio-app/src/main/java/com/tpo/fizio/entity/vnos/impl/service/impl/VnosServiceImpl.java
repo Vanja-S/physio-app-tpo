@@ -2,8 +2,6 @@ package com.tpo.fizio.entity.vnos.impl.service.impl;
 
 import com.tpo.fizio.entity.dto.VnosMetaDto;
 import com.tpo.fizio.entity.fizioplan.impl.dao.FizioplanDao;
-import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
-import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.vnos.impl.dao.VnosDao;
 import com.tpo.fizio.entity.vnos.impl.service.VnosService;
 import com.tpo.fizio.entity.vnos.model.Vnos;
@@ -86,45 +84,8 @@ public class VnosServiceImpl implements VnosService {
     }
 
     @Override
-    public List<FizioplanDto> getFizioplans() {
-        List<FizioPlan> fizioplani = fizioplanDao.getFizioplans();
-        if (fizioplani != null) {
-            return fizioplani.stream().map(plan -> new FizioplanDto(
-                    plan.getId(),
-                    plan.getNaslov(),
-                    plan.getPoskodba(),
-                    plan.getTrajanjeOd(),
-                    plan.getTrajanjeDo(),
-                    plan.getOpis()
-            )).toList();
-        }
-        return null;
-    }
-
-    @Override
-    public FizioplanDto getFizioplan(Integer fizioplanID) {
-        FizioPlan fizioPlan = fizioplanDao.getFizioplan(fizioplanID);
-        if (fizioPlan != null) {
-            return new FizioplanDto(
-                    fizioPlan.getId(),
-                    fizioPlan.getNaslov(),
-                    fizioPlan.getPoskodba(),
-                    fizioPlan.getTrajanjeOd(),
-                    fizioPlan.getTrajanjeDo(),
-                    fizioPlan.getOpis()
-            );
-        }
-        return null;
-    }
-
-    //TAB: Code -> imeplement method
-    //Ker delaš update, ki spreminja bazo pod @Override dodaš @Transactional
-    @Override
     @Transactional
     public VnosActionInformation updateVnos(VnosDto dto) {
-        //uzames return type te metode -> XActionInformation
-        //isto ko prej -> z misko gor in create method
-        VnosActionInformation information = vnosDao.updateVnos(dto);
-        return information;
+        return vnosDao.updateVnos(dto);
     }
 }

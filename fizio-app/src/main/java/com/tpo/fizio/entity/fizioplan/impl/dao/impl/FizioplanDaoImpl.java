@@ -6,8 +6,6 @@ import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
 import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.model.Pacient;
-import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
-import com.tpo.fizio.entity.pacient.model.PacientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -84,11 +82,8 @@ public class FizioplanDaoImpl implements FizioplanDao {
 
     @Override
     public FizioplanActionInformation updateFizioplan(FizioplanDto dto) {
-        //iz dtoja vzames ID
         Integer id = dto.getId();
-        //poisces objekt
         FizioPlan fizioplan = entityManager.find(FizioPlan.class, id);
-        //ce obstaja posodobis
         if (fizioplan != null) {
             fizioplan.setNaslov(dto.getNaslov());
             fizioplan.setOpis(dto.getOpis());
@@ -97,7 +92,6 @@ public class FizioplanDaoImpl implements FizioplanDao {
             fizioplan.setTrajanjeDo(dto.getTrajanjeDo());
             return new FizioplanActionInformation(1, true, false);
         }
-        //v primeru da ne obstaja vrnes isto sam da neuspesno
         return new FizioplanActionInformation(0, false, false);
     }
 }

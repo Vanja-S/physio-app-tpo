@@ -66,18 +66,14 @@ public class ObvestiloDaoImpl implements ObvestiloDao {
 
     @Override
     public ObvestiloActionInformation updateObvestilo(ObvestiloDto dto) {
-        //iz dtoja vzames ID
         Integer id = dto.getObvestiloID();
-        //poisces objekt
         Obvestilo obvestilo = entityManager.find(Obvestilo.class, id);
-        //ce obstaja posodobis
         if (obvestilo != null) {
             obvestilo.setNaslov(dto.getNaslov());
             obvestilo.setTs(dto.getTs());
             obvestilo.setVsebina((dto.getVsebina()));
             return new ObvestiloActionInformation(1, true, false);
         }
-        //v primeru da ne obstaja vrnes isto sam da neuspesno
         return new ObvestiloActionInformation(0, false, false);
     }
 }

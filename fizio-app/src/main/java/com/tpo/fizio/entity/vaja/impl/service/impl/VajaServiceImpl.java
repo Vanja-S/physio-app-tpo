@@ -1,7 +1,5 @@
 package com.tpo.fizio.entity.vaja.impl.service.impl;
 
-import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
-import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.vaja.impl.dao.VajaDao;
 import com.tpo.fizio.entity.vaja.impl.service.VajaService;
 import com.tpo.fizio.entity.vaja.model.Vaja;
@@ -56,7 +54,6 @@ public class VajaServiceImpl implements VajaService {
     @Override
     @Transactional
     public VajaActionInformation updateVaja(VajaDto dto) {
-        VajaActionInformation information = vajaDao.updateVaja(dto);
-        return information;
+        return vajaDao.updateVaja(dto);
     }
 }

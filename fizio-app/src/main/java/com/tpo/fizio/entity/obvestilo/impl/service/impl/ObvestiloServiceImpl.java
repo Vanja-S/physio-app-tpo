@@ -67,7 +67,6 @@ public class ObvestiloServiceImpl implements ObvestiloService {
     @Override
     @Transactional
     public ObvestiloActionInformation updateObvestilo(ObvestiloDto dto) {
-        ObvestiloActionInformation information = obvestiloDao.updateObvestilo(dto);
-        return information;
+        return obvestiloDao.updateObvestilo(dto);
     }
 }

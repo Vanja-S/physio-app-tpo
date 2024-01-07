@@ -1,8 +1,5 @@
 package com.tpo.fizio.entity.vaja.impl.dao.impl;
 
-import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
-import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
-import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.vaja.impl.dao.VajaDao;
 import com.tpo.fizio.entity.vaja.model.Vaja;
 import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
@@ -43,18 +40,14 @@ public class VajaDaoImpl implements VajaDao {
 
     @Override
     public VajaActionInformation updateVaja(VajaDto dto) {
-        //iz dtoja vzames ID
         long id = dto.getId();
-        //poisces objekt
         Vaja vaja = entityManager.find(Vaja.class, id);
-        //ce obstaja posodobis
         if (vaja != null) {
             vaja.setIme(dto.getIme());
             vaja.setOpis(dto.getOpis());
             vaja.setUrl(dto.getUrl());
             return new VajaActionInformation(1, true, false);
         }
-        //v primeru da ne obstaja vrnes isto sam da neuspesno
         return new VajaActionInformation(0, false, false);
     }
 }

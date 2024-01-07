@@ -85,22 +85,20 @@ public class VnosiController {
         return ResponseEntity.ok(vnosi);
     }
 
-    @Operation(summary = "UPDATE NOV NASLOV",
-            description = "<p>NOV OPIS</p>",
+    @Operation(summary = "UPDATE Vnos",
+            description = "<p>Posodobi Vnos, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Vnos ne obstaja je rezultat prazen.</p>",
             tags = VNOS)
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    //dolocis novo pot v value = {NOVA POT}, consumes, produces ostane isto, načeloma za vse samo "/"
     @PutMapping( value = "/", consumes = "application/json", produces = "application/json" )
-    @Secured({"ROLE_PACIENT"}) //ostane nespremenjeno
-    public ResponseEntity<VnosActionInformation> updateVnos( //novo ime metode
-            @RequestBody VnosDto dto //V tistmu kontrolerju ko si tist objekt VnosiController -> VnosDto
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<VnosActionInformation> updateVnos(
+            @RequestBody VnosDto dto
     ) {
-        //1. če še ne obstaja ActionInformation za objekt ustvariš class na poti entity/{objekt}/model
-        //2. Za service kreiraš novo metodo update{Objekt}(dto)
         VnosActionInformation information = vnosService.updateVnos(dto);
         return ResponseEntity.ok(information);
     }

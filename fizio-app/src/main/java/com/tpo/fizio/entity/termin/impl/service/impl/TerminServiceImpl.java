@@ -1,7 +1,5 @@
 package com.tpo.fizio.entity.termin.impl.service.impl;
 
-import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
-import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.termin.impl.dao.TerminDao;
 import com.tpo.fizio.entity.termin.impl.service.TerminService;
 import com.tpo.fizio.entity.termin.model.Termin;
@@ -122,7 +120,6 @@ public class TerminServiceImpl implements TerminService {
     @Override
     @Transactional
     public TerminActionInformation updateTermin(TerminDto dto) {
-        TerminActionInformation information = terminDao.updateTermin(dto);
-        return information;
+        return terminDao.updateTermin(dto);
     }
 }
