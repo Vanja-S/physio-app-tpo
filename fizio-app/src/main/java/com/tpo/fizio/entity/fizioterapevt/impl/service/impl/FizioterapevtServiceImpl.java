@@ -1,12 +1,16 @@
 package com.tpo.fizio.entity.fizioterapevt.impl.service.impl;
 
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.fizioterapevt.impl.dao.FizioterapevtDao;
 import com.tpo.fizio.entity.fizioterapevt.impl.service.FizioterapevtService;
 import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -51,5 +55,12 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
             );
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public FizioterapevtActionInformation updateFizioterapevt(FizioterapevtDto dto) {
+        FizioterapevtActionInformation information = fizioterapevtDao.updateFizioterapevt(dto);
+        return information;
     }
 }

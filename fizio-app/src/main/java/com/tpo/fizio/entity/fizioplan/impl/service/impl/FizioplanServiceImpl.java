@@ -3,11 +3,12 @@ package com.tpo.fizio.entity.fizioplan.impl.service.impl;
 import com.tpo.fizio.entity.fizioplan.impl.dao.FizioplanDao;
 import com.tpo.fizio.entity.fizioplan.impl.service.FizioplanService;
 import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
 import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
-import com.tpo.fizio.entity.pacient.impl.exception.PacientNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -56,4 +57,12 @@ public class FizioplanServiceImpl implements FizioplanService {
                 )
         ).toList();
     }
+
+    @Override
+    @Transactional
+    public FizioplanActionInformation updateFizioplan(FizioplanDto dto) {
+        FizioplanActionInformation information = fizioplanDao.updateFizioplan(dto);
+        return information;
+    }
+
 }

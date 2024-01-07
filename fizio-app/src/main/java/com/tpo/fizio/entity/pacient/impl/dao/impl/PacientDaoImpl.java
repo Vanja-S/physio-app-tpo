@@ -3,6 +3,11 @@ package com.tpo.fizio.entity.pacient.impl.dao.impl;
 import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.model.Pacient;
+import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
+import com.tpo.fizio.entity.pacient.model.PacientDto;
+import com.tpo.fizio.entity.vaja.model.Vaja;
+import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
+import com.tpo.fizio.entity.vaja.model.VajaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,5 +58,22 @@ public class PacientDaoImpl implements PacientDao {
             result = null;
         }
         return result;
+    }
+
+    @Override
+    public PacientActionInformation updatePacient(PacientDto dto) {
+        //iz dtoja vzames ID
+        String id = dto.getUsername();
+        //poisces objekt
+        Pacient pacient = entityManager.find(Pacient.class, id);
+        //ce obstaja posodobis
+        if (pacient != null) {
+            pacient.setIme(dto.getIme());
+            pacient.setPriimek(dto.getPriimek());
+            pacient.setDatumRojstva(dto.getDatumRojstva());
+            return new PacientActionInformation(1, true, false);
+        }
+        //v primeru da ne obstaja vrnes isto sam da neuspesno
+        return new PacientActionInformation(0, false, false);
     }
 }

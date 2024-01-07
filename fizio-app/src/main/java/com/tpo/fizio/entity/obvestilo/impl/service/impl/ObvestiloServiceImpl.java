@@ -3,10 +3,12 @@ package com.tpo.fizio.entity.obvestilo.impl.service.impl;
 import com.tpo.fizio.entity.obvestilo.impl.dao.ObvestiloDao;
 import com.tpo.fizio.entity.obvestilo.impl.service.ObvestiloService;
 import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
+import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -60,5 +62,12 @@ public class ObvestiloServiceImpl implements ObvestiloService {
             );
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public ObvestiloActionInformation updateObvestilo(ObvestiloDto dto) {
+        ObvestiloActionInformation information = obvestiloDao.updateObvestilo(dto);
+        return information;
     }
 }

@@ -1,10 +1,14 @@
 package com.tpo.fizio.entity.termin.impl.dao.impl;
 
+import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.model.Pacient;
 import com.tpo.fizio.entity.termin.impl.dao.TerminDao;
 import com.tpo.fizio.entity.termin.model.Termin;
 import com.tpo.fizio.entity.termin.model.TerminActionInformation;
+import com.tpo.fizio.entity.termin.model.TerminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -140,5 +144,22 @@ public class TerminDaoImpl implements TerminDao {
     @Override
     public Termin getTermin(Integer terminId) {
         return entityManager.find(Termin.class, terminId);
+    }
+
+    @Override
+    public TerminActionInformation updateTermin(TerminDto dto) {
+        //iz dtoja vzames ID
+        Integer id = dto.getTerminId();
+        //poisces objekt
+        Termin termin = entityManager.find(Termin.class, id);
+        //ce obstaja posodobis
+        if (termin != null) {
+            termin.setJeZaseden(dto.getJeZaseden());
+            termin.setKonec(dto.getKonec());
+            termin.setZacetek(dto.getZacetek());
+            return new TerminActionInformation(1, true, false);
+        }
+        //v primeru da ne obstaja vrnes isto sam da neuspesno
+        return new TerminActionInformation(0, false, false);
     }
 }

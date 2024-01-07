@@ -1,12 +1,16 @@
 package com.tpo.fizio.entity.vaja.impl.service.impl;
 
+import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
+import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.vaja.impl.dao.VajaDao;
 import com.tpo.fizio.entity.vaja.impl.service.VajaService;
 import com.tpo.fizio.entity.vaja.model.Vaja;
+import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
 import com.tpo.fizio.entity.vaja.model.VajaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -47,5 +51,12 @@ public class VajaServiceImpl implements VajaService {
             )).toList();
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public VajaActionInformation updateVaja(VajaDto dto) {
+        VajaActionInformation information = vajaDao.updateVaja(dto);
+        return information;
     }
 }

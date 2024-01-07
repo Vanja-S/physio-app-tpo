@@ -1,5 +1,6 @@
 package com.tpo.fizio.entity.vaja.impl.service;
 
+import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
 import com.tpo.fizio.entity.vaja.model.VajaDto;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface VajaService {
     VajaDto getVaja(Long vajaId);
 
     List<VajaDto> getVaje();
+
+    VajaActionInformation updateVaja(VajaDto dto);
 }

@@ -2,6 +2,8 @@ package com.tpo.fizio.entity.obvestilo.impl.dao.impl;
 
 import com.tpo.fizio.entity.obvestilo.impl.dao.ObvestiloDao;
 import com.tpo.fizio.entity.obvestilo.model.Obvestilo;
+import com.tpo.fizio.entity.obvestilo.model.ObvestiloActionInformation;
+import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -60,5 +62,22 @@ public class ObvestiloDaoImpl implements ObvestiloDao {
     @Override
     public Obvestilo getObvestilo(Integer obvestiloId) {
         return entityManager.find(Obvestilo.class, obvestiloId);
+    }
+
+    @Override
+    public ObvestiloActionInformation updateObvestilo(ObvestiloDto dto) {
+        //iz dtoja vzames ID
+        Integer id = dto.getObvestiloID();
+        //poisces objekt
+        Obvestilo obvestilo = entityManager.find(Obvestilo.class, id);
+        //ce obstaja posodobis
+        if (obvestilo != null) {
+            obvestilo.setNaslov(dto.getNaslov());
+            obvestilo.setTs(dto.getTs());
+            obvestilo.setVsebina((dto.getVsebina()));
+            return new ObvestiloActionInformation(1, true, false);
+        }
+        //v primeru da ne obstaja vrnes isto sam da neuspesno
+        return new ObvestiloActionInformation(0, false, false);
     }
 }
