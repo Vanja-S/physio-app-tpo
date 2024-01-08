@@ -17,7 +17,7 @@ class ping():
 
 def ping_database() -> bool:
     try:
-        connection = mysql.connector.connect(host='localhost',
+        connection = mysql.connector.connect(host="db",
                                          database='fizio',
                                          user='fizioUser',
                                          password='fizioUser',

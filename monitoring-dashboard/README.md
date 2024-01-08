@@ -6,4 +6,4 @@ This solution uses consists of a simple Python web application built using Flask
 
 ```console
 foo@bar ~$ docker run -p 5000:5000 monitor-app
-```
+``
