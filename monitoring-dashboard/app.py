@@ -4,8 +4,8 @@ from ping import ping, ping_database
 
 
 # Ping objects
-keycloak = ping("http://localhost:8080")
-server = ping("http://localhost:8081/swagger-ui/index.html#/")
+keycloak = ping("http://keycloak:8080")
+server = ping("http://server:8081/swagger-ui/index.html#/")
 
 app = Flask(__name__, static_url_path='/static')
 
