@@ -4,8 +4,8 @@ spring:
   security:
     oauth2:
       issuer-uri: http://keycloak:8080/realms/fizio
-      access-token-url: http://keycloak:8080/realms/fizio/protocol/openid-connect/token
-      authorization-url: http://keycloak:8080/realms/fizio/protocol/openid-connect/auth
+      access-token-url: http://localhost:8080/realms/fizio/protocol/openid-connect/token
+      authorization-url: http://localhost:8080/realms/fizio/protocol/openid-connect/auth
       roles-path: resource_access/fizio/roles
       username-claim: preferred_username
       name-claim: name
