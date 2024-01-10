@@ -22,27 +22,23 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - "KEYCLOAK_IMPORT= /opt/keycloak/data/imports/realm-export.json"
+      - "KEYCLOAK_IMPORT= /opt/keycloak/data/import/realm-export.json"
       - "KEYCLOAK_ADMIN=admin"
       - "KEYCLOAK_ADMIN_PASSWORD=admin"
     volumes:
-      - ./keycloak-db/:/opt/keycloak/data/imports/:ro
+      - ./keycloak-db/:/opt/keycloak/data/import/:ro
     entrypoint: '/opt/keycloak/bin/kc.sh start-dev --http-port=8080 --import-realm'
 
   server:
     depends_on:
-      - keycloak
-      - db
+      - "db"
+      - "keycloak"
     build:
       context: ./fizio-app
       dockerfile: Dockerfile
-    environment:
-      - "SERVER_PORT=8081"
-      - "SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/fizio"
-      - "SPRING_DATASOURCE_USERNAME=fizioUser"
-      - "SPRING_DATASOURCE_PASSWORD=fizioUser"
     ports:
       - "8081:8081"
+    restart: always
 
 volumes:
   mysql-volume:
