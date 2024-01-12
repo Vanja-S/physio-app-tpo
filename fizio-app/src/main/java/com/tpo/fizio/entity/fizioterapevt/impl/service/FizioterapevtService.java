@@ -1,5 +1,6 @@
 package com.tpo.fizio.entity.fizioterapevt.impl.service;
 
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface FizioterapevtService {
     List<FizioterapevtDto> getFizioterapevts();
 
     FizioterapevtDto getFizioterapevt(String fizioterapevtusername);
+
+    FizioterapevtActionInformation updateFizioterapevt(FizioterapevtDto dto);
 }

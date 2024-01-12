@@ -5,10 +5,12 @@ import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.impl.service.PacientService;
 import com.tpo.fizio.entity.pacient.model.Pacient;
+import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
 import com.tpo.fizio.entity.pacient.model.PacientDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -66,9 +68,16 @@ public class PacientServiceImpl implements PacientService {
                     fizioterapevt.getPriimek(),
                     fizioterapevt.getUlica(),
                     fizioterapevt.getHisnaStevilka(),
+                    fizioterapevt.getPostnaStevilka(),
                     fizioterapevt.getKraj()
             );
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public PacientActionInformation updatePacient(PacientDto dto) {
+        return pacientDao.updatePacient(dto);
     }
 }

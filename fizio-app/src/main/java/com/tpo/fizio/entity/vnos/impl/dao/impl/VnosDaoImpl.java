@@ -5,6 +5,7 @@ import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
 import com.tpo.fizio.entity.vnos.impl.dao.VnosDao;
 import com.tpo.fizio.entity.vnos.model.Vnos;
 import com.tpo.fizio.entity.vnos.model.VnosActionInformation;
+import com.tpo.fizio.entity.vnos.model.VnosDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -64,5 +65,18 @@ public class VnosDaoImpl implements VnosDao {
             resultList = null;
         }
         return resultList;
+    }
+
+    @Override
+    public VnosActionInformation updateVnos(VnosDto dto) {
+        Integer id = dto.getId();
+        Vnos vnos = entityManager.find(Vnos.class, id);
+        if (vnos != null) {
+            vnos.setKomentar(dto.getKomentar());
+            vnos.setStPonovitev(Integer.valueOf(dto.getPonovitve().split("x")[0].strip()));
+            vnos.setStSetov(Integer.valueOf(dto.getPonovitve().split("x")[1].strip()));
+            return new VnosActionInformation(1, true, false);
+        }
+        return new VnosActionInformation(0, false, false);
     }
 }

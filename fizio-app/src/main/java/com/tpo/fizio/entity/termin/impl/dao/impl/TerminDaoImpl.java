@@ -5,6 +5,7 @@ import com.tpo.fizio.entity.pacient.model.Pacient;
 import com.tpo.fizio.entity.termin.impl.dao.TerminDao;
 import com.tpo.fizio.entity.termin.model.Termin;
 import com.tpo.fizio.entity.termin.model.TerminActionInformation;
+import com.tpo.fizio.entity.termin.model.TerminDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -140,5 +141,18 @@ public class TerminDaoImpl implements TerminDao {
     @Override
     public Termin getTermin(Integer terminId) {
         return entityManager.find(Termin.class, terminId);
+    }
+
+    @Override
+    public TerminActionInformation updateTermin(TerminDto dto) {
+        Integer id = dto.getTerminId();
+        Termin termin = entityManager.find(Termin.class, id);
+        if (termin != null) {
+            termin.setJeZaseden(dto.getJeZaseden());
+            termin.setKonec(dto.getKonec());
+            termin.setZacetek(dto.getZacetek());
+            return new TerminActionInformation(1, true, false);
+        }
+        return new TerminActionInformation(0, false, false);
     }
 }

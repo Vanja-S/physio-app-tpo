@@ -70,7 +70,7 @@ public class TerminiController {
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    @PutMapping( value = "/termini/{terminID}/book", produces = "application/json")
+    @PutMapping(value = "/termini/{terminID}/book", produces = "application/json")
     @Secured({"ROLE_PACIENT"})
     public ResponseEntity<TerminActionInformation> bookTerminForPacient(
             @PathVariable("terminID") Integer terminId,
@@ -79,6 +79,7 @@ public class TerminiController {
         TerminActionInformation information = terminService.bookTermin(terminId, pacientUsername);
         return ResponseEntity.ok(information);
     }
+
     @Operation(summary = "UPDATE zasedenost Termina - Prekliči",
             description = "<p>Nastavi zasedenost Termina na false in mu izbriši pacienta, ki je rezerviral ta termin. " +
                     "V primeru, da termin ali pacient ne obstajata je rezultat viden v odgovoru.</p>",
@@ -88,7 +89,7 @@ public class TerminiController {
             @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
     })
-    @PutMapping( value = "/termini/{terminID}/cancel", produces = "application/json")
+    @PutMapping(value = "/termini/{terminID}/cancel", produces = "application/json")
     @Secured({"ROLE_PACIENT"})
     public ResponseEntity<TerminActionInformation> cancelTerminForPacient(
             @PathVariable("terminID") Integer terminId
@@ -134,5 +135,21 @@ public class TerminiController {
         return ResponseEntity.ok(termin);
     }
 
-
+    @Operation(summary = "UPDATE Termin",
+            description = "<p>Posodobi Termin, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Termin ne obstaja je rezultat prazen.</p>",
+            tags = TERMIN)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<TerminActionInformation> updateTermin(
+            @RequestBody TerminDto dto
+    ) {
+        TerminActionInformation information = terminService.updateTermin(dto);
+        return ResponseEntity.ok(information);
+    }
 }

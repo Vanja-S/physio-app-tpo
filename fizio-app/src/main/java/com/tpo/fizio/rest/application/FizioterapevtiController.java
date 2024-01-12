@@ -1,6 +1,7 @@
 package com.tpo.fizio.rest.application;
 
 import com.tpo.fizio.entity.fizioterapevt.impl.service.FizioterapevtService;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,10 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -66,5 +64,23 @@ public class FizioterapevtiController {
         if (fizioterapevt == null)
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(fizioterapevt);
+    }
+
+    @Operation(summary = "UPDATE Fizioterapevt",
+            description = "<p>Posodobi Fizioterapevta, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Fizioterapevt ne obstaja je rezultat prazen.</p>",
+            tags = FIZIOTERAPEVT)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<FizioterapevtActionInformation> updateFizioterapevt(
+            @RequestBody FizioterapevtDto dto
+    ) {
+        FizioterapevtActionInformation information = fizioterapevtService.updateFizioterapevt(dto);
+        return ResponseEntity.ok(information);
     }
 }

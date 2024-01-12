@@ -3,11 +3,12 @@ package com.tpo.fizio.entity.fizioplan.impl.service.impl;
 import com.tpo.fizio.entity.fizioplan.impl.dao.FizioplanDao;
 import com.tpo.fizio.entity.fizioplan.impl.service.FizioplanService;
 import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
 import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
-import com.tpo.fizio.entity.pacient.impl.exception.PacientNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -56,4 +57,43 @@ public class FizioplanServiceImpl implements FizioplanService {
                 )
         ).toList();
     }
+
+    @Override
+    public List<FizioplanDto> getFizioplans() {
+        List<FizioPlan> fizioplani = fizioplanDao.getFizioplans();
+        if (fizioplani != null) {
+            return fizioplani.stream().map(plan -> new FizioplanDto(
+                    plan.getId(),
+                    plan.getNaslov(),
+                    plan.getPoskodba(),
+                    plan.getTrajanjeOd(),
+                    plan.getTrajanjeDo(),
+                    plan.getOpis()
+            )).toList();
+        }
+        return null;
+    }
+
+    @Override
+    public FizioplanDto getFizioplan(Integer fizioplanID) {
+        FizioPlan fizioPlan = fizioplanDao.getFizioplan(fizioplanID);
+        if (fizioPlan != null) {
+            return new FizioplanDto(
+                    fizioPlan.getId(),
+                    fizioPlan.getNaslov(),
+                    fizioPlan.getPoskodba(),
+                    fizioPlan.getTrajanjeOd(),
+                    fizioPlan.getTrajanjeDo(),
+                    fizioPlan.getOpis()
+            );
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public FizioplanActionInformation updateFizioplan(FizioplanDto dto) {
+        return fizioplanDao.updateFizioplan(dto);
+    }
+
 }

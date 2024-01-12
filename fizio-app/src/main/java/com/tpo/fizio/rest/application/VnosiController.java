@@ -84,4 +84,22 @@ public class VnosiController {
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(vnosi);
     }
+
+    @Operation(summary = "UPDATE Vnos",
+            description = "<p>Posodobi Vnos, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Vnos ne obstaja je rezultat prazen.</p>",
+            tags = VNOS)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping( value = "/", consumes = "application/json", produces = "application/json" )
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<VnosActionInformation> updateVnos(
+            @RequestBody VnosDto dto
+    ) {
+        VnosActionInformation information = vnosService.updateVnos(dto);
+        return ResponseEntity.ok(information);
+    }
 }

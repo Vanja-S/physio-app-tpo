@@ -2,6 +2,8 @@ package com.tpo.fizio.entity.fizioplan.impl.dao.impl;
 
 import com.tpo.fizio.entity.fizioplan.impl.dao.FizioplanDao;
 import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.pacient.impl.dao.PacientDao;
 import com.tpo.fizio.entity.pacient.model.Pacient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,21 @@ public class FizioplanDaoImpl implements FizioplanDao {
     @Override
     public FizioPlan getFizioplan(Integer fizioplanID) {
         return entityManager.find(FizioPlan.class, fizioplanID);
+    }
+
+    @Override
+    public FizioplanActionInformation updateFizioplan(FizioplanDto dto) {
+        Integer id = dto.getId();
+        FizioPlan fizioplan = entityManager.find(FizioPlan.class, id);
+        if (fizioplan != null) {
+            fizioplan.setNaslov(dto.getNaslov());
+            fizioplan.setOpis(dto.getOpis());
+            fizioplan.setPoskodba(dto.getPoskodba());
+            fizioplan.setTrajanjeOd(dto.getTrajanjeOd());
+            fizioplan.setTrajanjeDo(dto.getTrajanjeDo());
+            return new FizioplanActionInformation(1, true, false);
+        }
+        return new FizioplanActionInformation(0, false, false);
     }
 }
 

@@ -1,6 +1,8 @@
 package com.tpo.fizio.entity.fizioplan.impl.dao;
 
 import com.tpo.fizio.entity.fizioplan.model.FizioPlan;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ public interface FizioplanDao {
     List<FizioPlan> getFizioplans();
 
     FizioPlan getFizioplan(Integer fizioplanID);
+
+    FizioplanActionInformation updateFizioplan(FizioplanDto dto);
 }

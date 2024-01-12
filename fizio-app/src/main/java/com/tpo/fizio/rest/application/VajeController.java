@@ -1,6 +1,7 @@
 package com.tpo.fizio.rest.application;
 
 import com.tpo.fizio.entity.vaja.impl.service.VajaService;
+import com.tpo.fizio.entity.vaja.model.VajaActionInformation;
 import com.tpo.fizio.entity.vaja.model.VajaDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,10 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -66,5 +64,23 @@ public class VajeController {
         if (vaja == null)
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(vaja);
+    }
+
+    @Operation(summary = "UPDATE Vaja",
+            description = "<p>Posodobi Vajo, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Vaja ne obstaja je rezultat prazen.</p>",
+            tags = VAJA)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<VajaActionInformation> updateVaja(
+            @RequestBody VajaDto dto
+    ) {
+        VajaActionInformation information = vajaService.updateVaja(dto);
+        return ResponseEntity.ok(information);
     }
 }

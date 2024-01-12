@@ -3,10 +3,12 @@ package com.tpo.fizio.entity.fizioterapevt.impl.service.impl;
 import com.tpo.fizio.entity.fizioterapevt.impl.dao.FizioterapevtDao;
 import com.tpo.fizio.entity.fizioterapevt.impl.service.FizioterapevtService;
 import com.tpo.fizio.entity.fizioterapevt.model.Fizioterapevt;
+import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtActionInformation;
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
                     fizio.getPriimek(),
                     fizio.getUlica(),
                     fizio.getHisnaStevilka(),
+                    fizio.getPostnaStevilka(),
                     fizio.getKraj()
             )).toList();
         }
@@ -47,9 +50,16 @@ public class FizioterapevtServiceImpl implements FizioterapevtService {
                     fizioterapevt.getPriimek(),
                     fizioterapevt.getUlica(),
                     fizioterapevt.getHisnaStevilka(),
+                    fizioterapevt.getPostnaStevilka(),
                     fizioterapevt.getKraj()
             );
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public FizioterapevtActionInformation updateFizioterapevt(FizioterapevtDto dto) {
+        return fizioterapevtDao.updateFizioterapevt(dto);
     }
 }

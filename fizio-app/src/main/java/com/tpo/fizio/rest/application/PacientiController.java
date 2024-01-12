@@ -6,6 +6,7 @@ import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
 import com.tpo.fizio.entity.obvestilo.impl.service.ObvestiloService;
 import com.tpo.fizio.entity.obvestilo.model.ObvestiloDto;
 import com.tpo.fizio.entity.pacient.impl.service.PacientService;
+import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
 import com.tpo.fizio.entity.pacient.model.PacientDto;
 import com.tpo.fizio.entity.termin.impl.service.TerminService;
 import com.tpo.fizio.entity.termin.model.TerminDto;
@@ -16,10 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -204,5 +202,21 @@ public class PacientiController {
         return ResponseEntity.ok(vsaObvestila);
     }
 
-
+    @Operation(summary = "UPDATE Pacient",
+            description = "<p>Posodobi Pacienta, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da Pacient ne obstaja je rezultat prazen.</p>",
+            tags = PACIENT)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<PacientActionInformation> updatePacient(
+            @RequestBody PacientDto dto
+    ) {
+        PacientActionInformation information = pacientService.updatePacient(dto);
+        return ResponseEntity.ok(information);
+    }
 }

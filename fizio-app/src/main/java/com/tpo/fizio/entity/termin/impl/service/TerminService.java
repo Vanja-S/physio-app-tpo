@@ -23,4 +23,6 @@ public interface TerminService {
     List<TerminDto> getTermini();
 
     TerminDto getTermin(Integer terminId);
+
+    TerminActionInformation updateTermin(TerminDto dto);
 }

@@ -1,6 +1,8 @@
 package com.tpo.fizio.rest.application;
 
 import com.tpo.fizio.entity.dto.VnosMetaDto;
+import com.tpo.fizio.entity.fizioplan.impl.service.FizioplanService;
+import com.tpo.fizio.entity.fizioplan.model.FizioplanActionInformation;
 import com.tpo.fizio.entity.fizioplan.model.FizioplanDto;
 import com.tpo.fizio.entity.vnos.impl.service.VnosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,9 +26,12 @@ import static com.tpo.fizio.rest.util.RestConstants.FIZIOPLAN;
 public class FizioplaniController {
     private VnosService vnosService;
 
+    private FizioplanService fizioplanService;
+
     @Autowired
-    public FizioplaniController(VnosService vnosService) {
+    public FizioplaniController(VnosService vnosService, FizioplanService fizioplanService) {
         this.vnosService = vnosService;
+        this.fizioplanService = fizioplanService;
     }
 
     @Operation(summary = "GET Vnosi meta za Fizioplan",
@@ -64,7 +66,7 @@ public class FizioplaniController {
     @Secured("ROLE_PACIENT")
     public ResponseEntity<List<FizioplanDto>> getPacientsFizioplanMeta(
     ) {
-        List<FizioplanDto> fizioplani = vnosService.getFizioplans();
+        List<FizioplanDto> fizioplani = fizioplanService.getFizioplans();
         if (fizioplani == null)
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(fizioplani);
@@ -83,9 +85,27 @@ public class FizioplaniController {
     public ResponseEntity<FizioplanDto> getFizioplan(
             @PathVariable("fizioplanID") Integer fizioplanID
     ) {
-        FizioplanDto fizioplan = vnosService.getFizioplan(fizioplanID);
+        FizioplanDto fizioplan = fizioplanService.getFizioplan(fizioplanID);
         if (fizioplan == null)
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(fizioplan);
+    }
+
+    @Operation(summary = "UPDATE Fizioplan",
+            description = "<p>Posodobi fizioplan, če ta obstaja po podanem identifierju v requestu. " +
+                    "V primeru, da fizioplan ne obstaja je rezultat prazen.</p>",
+            tags = FIZIOPLAN)
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success - successfully retrieved data."),
+            @ApiResponse(responseCode = "204", description = "No Content - there is no existing data.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content)
+    })
+    @PutMapping(value = "/", consumes = "application/json", produces = "application/json")
+    @Secured({"ROLE_PACIENT"})
+    public ResponseEntity<FizioplanActionInformation> updateFizioplan(
+            @RequestBody FizioplanDto dto
+    ) {
+        FizioplanActionInformation information = fizioplanService.updateFizioplan(dto);
+        return ResponseEntity.ok(information);
     }
 }

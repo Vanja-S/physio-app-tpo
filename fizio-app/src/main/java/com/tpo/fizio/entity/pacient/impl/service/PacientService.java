@@ -1,6 +1,7 @@
 package com.tpo.fizio.entity.pacient.impl.service;
 
 import com.tpo.fizio.entity.fizioterapevt.model.FizioterapevtDto;
+import com.tpo.fizio.entity.pacient.model.PacientActionInformation;
 import com.tpo.fizio.entity.pacient.model.PacientDto;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface PacientService {
     PacientDto getPacient(String pacientUsername);
 
     FizioterapevtDto getPacientsFizioterapevt(String pacientUsername);
+
+    PacientActionInformation updatePacient(PacientDto dto);
 }

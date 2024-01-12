@@ -2,6 +2,7 @@ package com.tpo.fizio.entity.termin.impl.dao;
 
 import com.tpo.fizio.entity.termin.model.Termin;
 import com.tpo.fizio.entity.termin.model.TerminActionInformation;
+import com.tpo.fizio.entity.termin.model.TerminDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,4 +24,6 @@ public interface TerminDao {
     List<Termin> getTermini();
 
     Termin getTermin(Integer terminId);
+
+    TerminActionInformation updateTermin(TerminDto dto);
 }

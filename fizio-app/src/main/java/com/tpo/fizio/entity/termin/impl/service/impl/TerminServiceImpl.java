@@ -116,4 +116,10 @@ public class TerminServiceImpl implements TerminService {
         }
         return null;
     }
+
+    @Override
+    @Transactional
+    public TerminActionInformation updateTermin(TerminDto dto) {
+        return terminDao.updateTermin(dto);
+    }
 }
