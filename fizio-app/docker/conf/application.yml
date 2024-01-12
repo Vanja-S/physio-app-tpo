@@ -4,13 +4,17 @@ spring:
   security:
     oauth2:
       jwks-url: ${JWKS_URL}
-      roles-path: resource_access/fizio-test/roles
+      roles-path: resource_access/fizio/roles
       username-claim: preferred_username
       name-claim: name
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 
 server:
