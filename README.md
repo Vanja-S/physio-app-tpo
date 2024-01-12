@@ -64,7 +64,7 @@ From the Keycloak admin console, in the realm selection dropdown menu select CRE
 
 From the realm selection dropdown menu fizio realm should be present.
 Proceed to select the created realm and select the section Users.
-In the Users section you can find users that represent the patients (username structure: ^[a-zA-Z][a-zA-Z]\d{4}$ ex: ar5211).
+In the Users section you can find users that represent the patients (username structure: [a-zA-Z][a-zA-Z]\d{4} ex: ar5211).
 - All patients have the password: tpo
 
 Application is ready to use at [Server Dashboard API](http://localhost:8081/swagger-ui/index.html#/).
