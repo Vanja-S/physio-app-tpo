@@ -12,15 +12,15 @@ import java.util.Set;
 @ConstructorBinding
 public class SecurityProperties {
 
-    private final String issuerUri;
+    private final String jwksUrl;
     private final Set<String> rolesPath;
     private final String usernameClaim;
     private final String nameClaim;
     private final String accessTokenUrl;
     private final String authorizationUrl;
 
-    public SecurityProperties(String issuerUri, Set<String> rolesPath, String usernameClaim, String nameClaim, String accessTokenUrl, String authorizationUrl) {
-        this.issuerUri = issuerUri;
+    public SecurityProperties(String jwksUrl, Set<String> rolesPath, String usernameClaim, String nameClaim, String accessTokenUrl, String authorizationUrl) {
+        this.jwksUrl = jwksUrl;
         this.rolesPath = rolesPath;
         this.usernameClaim = usernameClaim;
         this.nameClaim = nameClaim;
@@ -28,8 +28,8 @@ public class SecurityProperties {
         this.authorizationUrl = authorizationUrl;
     }
 
-    public String getIssuerUri() {
-        return issuerUri;
+    public String getJwksUrl() {
+        return jwksUrl;
     }
 
     public Set<String> getRolesPath() {

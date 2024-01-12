@@ -11,7 +11,10 @@ import org.springframework.security.authorization.method.AuthorizationManagerBef
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -48,7 +51,7 @@ public class AuthenticationConfiguration {
                 )
                 .oauth2ResourceServer(resourceServer -> resourceServer
                         .jwt(jwt -> jwt
-                                .decoder(JwtDecoders.fromIssuerLocation(securityProperties.getIssuerUri()))
+                                .decoder(NimbusJwtDecoder.withJwkSetUri(securityProperties.getJwksUrl()).jwsAlgorithm(SignatureAlgorithm.from("RS256")).build())
                                 .jwtAuthenticationConverter(new JwtTokenConverter(
                                         securityProperties.getUsernameClaim(),
                                         securityProperties.getNameClaim(),

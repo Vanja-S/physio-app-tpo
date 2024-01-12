@@ -82,3 +82,8 @@ plugins/
 *.lck
 
 .java-version
+
+deployment/server
+deployment/server/docker/application.yml
+deployment/server/docker/log4j2.xml
+deployment/server/docker/fizio-app.jar
