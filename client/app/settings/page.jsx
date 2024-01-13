@@ -1,12 +1,13 @@
-import { getServerSession } from "next-auth";
-import { getAccessToken } from "@/utils/sessionTokenAccessor";
+import { getToken } from "next-auth/jwt";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
-async function getUser() {
-	const url = `${process.env.BACKEND_URL}/api/v1/notifications`;
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-	let accessToken = await getAccessToken();
+async function getUser(username) {
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${username}/obvestila/`;
+
+	let accessToken = await getToken();
 
 	const res = await fetch(url, {
 		headers: {
@@ -27,7 +28,7 @@ export default async function Settings() {
 	const session = await getServerSession(authOptions);
 	if (session) {
 		try {
-			const user = await getUser();
+			const user = await getUser(session.user?.name);
 			return (
 				<main>
 					<h1>{user}</h1>

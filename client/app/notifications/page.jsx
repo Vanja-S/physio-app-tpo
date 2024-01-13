@@ -1,22 +1,23 @@
-import { getServerSession } from "next-auth";
-import { getAccessToken } from "@/utils/sessionTokenAccessor";
+import { getToken } from "next-auth/jwt";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
-async function getNotifications() {
-	const url = `${process.env.BACKEND_URL}/api/v1/notifications`;
+import { getServerSession } from "next-auth";
+import { authOptions, auth } from "@/utils/Auth";
 
-	let accessToken = await getAccessToken();
+async function getNotifications(username, token) {
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${username}obvestila/`;
 
 	const res = await fetch(url, {
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: "Bearer" + accessToken,
+			Authorization: "Bearer " + token,
 		},
 	});
 
 	if (res.ok) {
 		const data = await res.json();
+		console.log(data);
+
 		return data;
 	}
 
@@ -27,18 +28,20 @@ export default async function Notifications() {
 	const session = await getServerSession(authOptions);
 	if (session) {
 		try {
-			const notifications = await getNotifications();
+			const notifications = await getNotifications(
+				session.user.preferred_username,
+				session.token
+			);
 			return (
-				<main>
-					<h1>Appointment</h1>
+				<main className="flex flex-col p-8">
+					<h1 className="text-4l font-bold">Obvestila</h1>
 				</main>
 			);
 		} catch (e) {
-			console.error(e);
 			return (
-				<main>
-					<h1 className="text-4xl text-center">Notifications</h1>
-					<p className="text-red-600 text-center text-lg">
+				<main className="flex flex-col p-8">
+					<h1 className="text-4xl font-bold">Obvestila</h1>
+					<p className="text-lg">
 						Sorry, an error happened. Check the server logs.
 					</p>
 				</main>

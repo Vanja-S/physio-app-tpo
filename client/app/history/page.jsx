@@ -1,22 +1,23 @@
-import { getServerSession } from "next-auth";
-import { getAccessToken } from "@/utils/sessionTokenAccessor";
+import { getToken } from "next-auth/jwt";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
-async function getHistory() {
-	const url = `${process.env.BACKEND_URL}/api/v1/history`;
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/utils/Auth";
 
-	let accessToken = await getAccessToken();
+async function getHistory(username, token) {
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/pacienti/${username}/termini`;
 
+	console.log(url);
 	const res = await fetch(url, {
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: "Bearer" + accessToken,
+			Authorization: "Bearer " + token,
 		},
 	});
 
 	if (res.ok) {
 		const data = await res.json();
+		console.log(data);
 		return data;
 	}
 
@@ -27,18 +28,20 @@ export default async function History() {
 	const session = await getServerSession(authOptions);
 	if (session) {
 		try {
-			const history = await getHistory();
+			const history = await getHistory(
+				session.user.preferred_username,
+				session.token
+			);
 			return (
-				<main>
-					<h1>History</h1>
+				<main className="flex flex-col p-8">
+					<h1 className="text-4xl font-bold">Zgodovina</h1>
 				</main>
 			);
 		} catch (e) {
-			console.error(e);
 			return (
-				<main>
-					<h1 className="text-4xl text-center">History</h1>
-					<p className="text-red-600 text-center text-lg">
+				<main className="flex flex-col p-8">
+					<h1 className="text-4xl font-bold">Zgodovina</h1>
+					<p className="text-lg">
 						Sorry, an error happened. Check the server logs.
 					</p>
 				</main>

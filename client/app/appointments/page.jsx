@@ -1,22 +1,22 @@
-import { getServerSession } from "next-auth";
-import { getAccessToken } from "@/utils/sessionTokenAccessor";
+import { getToken } from "next-auth/jwt";
 import { redirect } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
-async function getFreeAppointments() {
-	const url = `${process.env.BACKEND_URL}/api/v1/appointments`;
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/utils/Auth";
 
-	let accessToken = await getAccessToken();
+async function getFreeAppointments(username, token) {
+	const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/pacienti/${username}/termini`;
 
 	const res = await fetch(url, {
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: "Bearer" + accessToken,
+			Authorization: "Bearer " + token,
 		},
 	});
 
 	if (res.ok) {
 		const data = await res.json();
+		console.log(data);
 		return data;
 	}
 
@@ -28,18 +28,24 @@ export default async function Appointments() {
 
 	if (session) {
 		try {
-			const appointments = await getFreeAppointments();
+			const appointments = await getFreeAppointments(
+				session.user.preferred_username,
+				session.token
+			);
 			return (
-				<main>
-					<h1>Appointment</h1>
+				<main className="flex flex-col p-8">
+					<h1 className="text-4xl font-bold">Termini</h1>
+					{appointments &&
+						appointments.array.forEach((appointment) => {
+							console.log(appointment);
+						})}
 				</main>
 			);
 		} catch (e) {
-			console.error(e);
 			return (
-				<main>
-					<h1 className="text-4xl text-center">Appointments</h1>
-					<p className="text-red-600 text-center text-lg">
+				<main className="flex flex-col p-8">
+					<h1 className="text-4xl font-bold">Termini</h1>
+					<p className="text-lg">
 						Sorry, an error happened. Check the server logs.
 					</p>
 				</main>
