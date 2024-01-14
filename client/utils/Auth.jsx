@@ -35,6 +35,7 @@ const authOptions = {
 					refreshToken: user.refresh_token,
 					refreshExpiresIn: user.refresh_expires_in,
 					sessionState: user.session_state,
+					expiresAt: Date.now() + user.expiresIn,
 				};
 			}
 

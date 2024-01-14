@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 export default function LoginForm() {
 	const [data, setData] = useState({ username: "", password: "" });
@@ -28,6 +28,10 @@ export default function LoginForm() {
 				router.push("/");
 				router.refresh();
 			}, 1000);
+			setTimeout(() => {
+				signOut({ callbackUrl: "/login" });
+				router.refresh();
+			}, 299999);
 		} else {
 			setError("Napaka! Preverite podatke.");
 		}

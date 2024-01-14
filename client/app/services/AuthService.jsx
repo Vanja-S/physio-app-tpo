@@ -14,7 +14,6 @@ export async function authenticate(username, password) {
 
 	if (res.ok) {
 		const token = await res.json();
-		console.log(token);
 		token.name = username;
 		return token;
 	}
@@ -33,5 +32,4 @@ export async function logout(refresh_token) {
 			refresh_token: refresh_token,
 		}),
 	});
-	console.log(res);
 }

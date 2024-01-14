@@ -14,7 +14,7 @@ export default function Logout() {
 				// logout();
 				router.refresh();
 			}}
-			className="btn px-4 md:px-2 py-2 cursor-pointer bg-platinum font-bold text-sm text-indigoDye rounded-full w-fit"
+			className="btn p-1 md:p-2 cursor-pointer bg-platinum font-bold text-sm text-indigoDye rounded-full w-fit"
 		>
 			<ArrowLeftEndOnRectangleIcon className="w-8 h-8"></ArrowLeftEndOnRectangleIcon>
 		</button>
