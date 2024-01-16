@@ -28,10 +28,6 @@ export default function LoginForm() {
 				router.push("/");
 				router.refresh();
 			}, 1000);
-			setTimeout(() => {
-				signOut({ callbackUrl: "/login" });
-				router.refresh();
-			}, 299999);
 		} else {
 			setError("Napaka! Preverite podatke.");
 		}
@@ -43,10 +39,7 @@ export default function LoginForm() {
 				Physio<span className="text-white">App</span>
 			</h1>
 			<div className="shadow-lg p-5 rounded-lg text-jet">
-				<form
-					onSubmit={handleSubmit}
-					className="flex flex-col gap-3 text-neutral-950"
-				>
+				<form onSubmit={handleSubmit} className="flex flex-col gap-3">
 					<input
 						onChange={(e) =>
 							setData({ ...data, username: e.target.value })

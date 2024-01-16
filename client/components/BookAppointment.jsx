@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function CancelAppointment({ id, token }) {
+export default function BookAppointment({ id, username, token }) {
 	const router = useRouter();
 
 	const [success, setSuccess] = useState(false);
@@ -10,7 +10,7 @@ export default function CancelAppointment({ id, token }) {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/termini/termini/${id}/cancel`;
+		const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/termini/termini/${id}/book?pacientUsername=${username}`;
 
 		await fetch(url, {
 			method: "PUT",
@@ -38,14 +38,14 @@ export default function CancelAppointment({ id, token }) {
 	return (
 		<div>
 			<button
-				className="bg-indigoDye rounded-md w-fit p-1 text-xs"
+				className="bg-indigoDye rounded-md w-fit px-2 py-1 text-xs"
 				onClick={handleClick}
 			>
-				Prekliči pregled
+				Rezerviraj pregled
 			</button>
 			{success && (
 				<div className="absolute bottom-4 right-4 bg-[#00FF00]/50 p-4 w-52 h-fit text-center text-md">
-					Preklicali ste termin.
+					Rezervirali ste termin.
 				</div>
 			)}
 			{error && (
