@@ -11,7 +11,8 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - tpo-network    
+      - tpo-network
+
   monitoring:
     build:
       context: ./monitoring-dashboard
@@ -19,7 +20,8 @@ services:
     ports:
       - "5100:5000"
     networks:
-      - tpo-network    
+      - tpo-network
+
   keycloak:
     image: quay.io/keycloak/keycloak:23.0.3
     depends_on:
@@ -40,7 +42,8 @@ services:
       - "KEYCLOAK_ADMIN_PASSWORD=admin"
     entrypoint: '/opt/keycloak/bin/kc.sh start -Dkeycloak.profile.feature.upload_scripts=enabled'
     networks:
-      - tpo-network  
+      - tpo-network
+
   server:
     depends_on:
       - "mariadb"
@@ -50,20 +53,21 @@ services:
       dockerfile: Dockerfile
     environment:
       - "JWKS_URL=http://keycloak:8080/realms/fizio/protocol/openid-connect/certs"
-      - "spring.security.oauth2.authorization-url=http://localhost:8080/realms/fizio/protocol/openid-connect/auth" 
-      - "spring.security.oauth2.access-token-url=http://localhost:8080/realms/fizio/protocol/openid-connect/token" 
-      - "spring.security.oauth2.roles-path=resource_access/fizio/roles" 
+      - "spring.security.oauth2.authorization-url=http://keycloak:8080/realms/fizio/protocol/openid-connect/auth"
+      - "spring.security.oauth2.access-token-url=http://keycloak:8080/realms/fizio/protocol/openid-connect/token"
+      - "spring.security.oauth2.roles-path=resource_access/fizio/roles"
       - "DATABASE_URL=jdbc:mysql://mariadb:3306/fizio"
       - "DATABASE_USERNAME=fizioUser"
       - "DATABASE_PASSWORD=fizioUser"
     ports:
       - "8081:8081"
     networks:
-      - tpo-network  
+      - tpo-network
     restart: always
 
 volumes:
   mariadb_data:
+
 
 networks:
   tpo-network:

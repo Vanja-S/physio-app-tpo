@@ -10,7 +10,7 @@ spring:
       username-claim: preferred_username
       name-claim: name
   datasource:
-    url: jdbc:mysql://db:3306/fizio
+    url: jdbc:mysql://mariadb:3306/fizio
     username: fizioUser
     password: fizioUser
 
