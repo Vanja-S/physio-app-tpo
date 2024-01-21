@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadbService
+spec:
+  selector:
+    app: mariadb
+  ports:
+  - protocol: "TCP"
+    port: 3306
+    targetPort: 3306
+  type: LoadBalancer
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb:latest
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: mariadb_data
+            mountPath: /var/lib/mysql
+        ports:
+        - containerPort: 3306

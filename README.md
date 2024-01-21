@@ -54,28 +54,31 @@ Analyse the logs:
 docker compose logs [server, mariadb, keycloak, monitoring] -f
 ```
 
- ## Usage
+## Usage
 
  After the stack is running, open keycloak on localhost:8080 and login using the following credentials:
- - username: admin
- - password: admin
+
+- username: admin
+- password: admin
 
 From the Keycloak admin console, in the realm selection dropdown menu select CREATE REALM. Import fizio-realm.json located in deployment/keycloak-import directory into Resource file section via browse option. Proceed to create the realm using the CREATE button.
 
 From the realm selection dropdown menu fizio realm should be present.
 Proceed to select the created realm and select the section Users.
 In the Users section you can find users that represent the patients (username structure: [a-zA-Z][a-zA-Z]\d{4} ex: ar5211).
+
 - All patients have the password: tpo
 
 Application is ready to use at [Server Dashboard API](http://localhost:8081/swagger-ui/index.html#/).
 On the DashBoard API first authorize yourself via the Authorize button:
+
 - username: ${One of patients usernames in keycloak}
 - password: tpo
 - client_id: fizio
 
 Proceed to use exposed endpoints.
 
-# Report
+## Report for docker compose
 
 We created the docker compose file. Based on application structure, the first component that needs to be running is the database(keycloak and server depend on in). In first iteration we had a docker file present that downloaded the latest mysql image and then copies the ddl script into the volume of the image. Later we decided it best to use a constant image for persistance. To achieve that, we removed the docker file and incldued the following in the docker-compose.yml:
 
@@ -112,6 +115,7 @@ ENV FLASK_APP=app.py
 
 CMD ["flask", "run", "--host", "0.0.0.0"]
 ```
+
 Here we use FROM to specify the base image will be Python 3.11.2. This image will be used as the starting point for building the component. Next we use WORKDIR to set the working directory inside the container to '/app'. In the next step we install the required libraries that are used in the component. We proceed to copy content of the directory into the container '/app' directory. Then we use EXPOSE and specify the port 5000. This documents that the application inside the container will listen on port 5000 (informative and doesn't publish the port). At the end we set envoirment variable FLASK_APP. This tells Flash where the starting point is.
 
 After we finished with the docker file we included the following in docker-compose:
@@ -158,10 +162,12 @@ keycloak:
 So, we configured a Keycloak service using the following Docker Compose settings. The service is based on the image quay.io/keycloak/keycloak:23.0.3 (same argument for using a specific version instead of latest as in the database component) and depends on a MariaDB service indicated by the depends_on directive. To make Keycloak accessible, we mapped port 8080 on the host machine to port 8080 within the Keycloak container. The environment variables are set to configure Keycloak to use MariaDB as its database, specifying connection details such as database URL, username, and password. Other environment variables control Keycloak's behavior, including HTTPS settings and administrative credentials. The entrypoint is configured to start Keycloak with additional features enabled, such as the ability to upload scripts. Finally, the Keycloak service is connected to the custom network tpo-network for communication with other services. This comprehensive configuration aims to set up a Keycloak service with the necessary dependencies and settings that results in a higher quality component and will be easier to use in the next assignment.
 
 The last component was the server. To prepare the usage we prepared a directory in the project folder consisting of:
+
 - docker filer
 - conf directory including application.yaml and log4j2.xml
 
 Application properties configuration:
+
 ```yaml
 spring:
   application:
@@ -203,6 +209,7 @@ springdoc:
 ```
 
 Next we prepared a script that prepares the needed structure from the project directory:
+
 ```sh
 #!/bin/bash
 
@@ -283,3 +290,22 @@ server:
 ```
 
 In this Docker Compose configuration block, we specified the setup of a server service the server. The depends_on directive ensures that the server service is dependent on the successful startup of both the "mariadb" and "keycloak" services. Next the build section specifies the context as "./server" and the Dockerfile as "Dockerfile," indicating the location and name of the Dockerfile to use for building the server image. Environment variables are then defined, configuring the server's interaction with Keycloak and MariaDB, such as the JWKS URL, OAuth2 authorization and token URLs, roles path, and database connection details. Here we can see some properties are named with upper case and appear in the application.yaml. This will be injected into the file with the provided configuration. We wanted to exclude this from the application.yaml file since we figured this will be helpful and needed if by any chance any adresses are decided dynamically. The ports directive maps port 8081 on the host machine to port 8081 within the server container, allowing external access. The service is connected to the "tpo-network" for communication with other services. The restart: always ensures that the server service restarts automatically in case of failure or system reboot. We used this command since depends on ensures that the depended services start before it, but from testing we saw that the database sometimes did not set up in completion resulting in a failure because connection was not yet available. We also resolved this problem when we decided to not download the db image in every run.
+
+## Report for k8s
+
+Using a specific implementation of kubernetes, minikube (for development reasons), for a more distributed architecture of our application first requires a few things:
+
+- Installed minikube
+- Installed kubectl kubernetes control cli
+- Docker for desktop
+- Docker cli
+
+Using docker first build all the necessary images, the easiest way is to do the following:
+
+1. Run build.sh from the root directory
+2. Navigate to deployment folder
+3. Run `docker compose build` to build all the images
+4. Now tell kubectl to use docker-desktop context in order to pull images from the local repository
+5. Apply the deployment files in the deployment folder (there should be one in each folder i.e. one for each component and one in the deployment folder for the server)
+
+The application can now be accessed from all the differnet urls the app offers, through the localhost address.
