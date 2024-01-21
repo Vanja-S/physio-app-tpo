@@ -305,7 +305,11 @@ Using docker first build all the necessary images, the easiest way is to do the 
 1. Run build.sh from the root directory
 2. Navigate to deployment folder
 3. Run `docker compose build` to build all the images
-4. Now tell kubectl to use docker-desktop context in order to pull images from the local repository
+4. Make sure kubectl can pull images from the local repository
 5. Apply the deployment files in the deployment folder (there should be one in each folder i.e. one for each component and one in the deployment folder for the server)
 
 The application can now be accessed from all the differnet urls the app offers, through the localhost address.
+
+### Detailed explanation
+
+The application should work the same way it does in a docker compose deployment, just with added replicas and k8s benefits. The deployments create a deployment, service and two ingress controllers (one for the server and one for keycloak).
